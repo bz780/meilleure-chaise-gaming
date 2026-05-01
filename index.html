@@ -187,6 +187,27 @@ h4{font-size:16px;margin:18px 0 6px}
 .footer a{color:#bbb}
 .footer a:hover{color:#fff}
 .footer-disclaimer{padding-top:20px;border-top:1px solid #333;font-size:12px;color:#888;line-height:1.55}
+
+/* Author bio */
+.author-bio{background:#f5f5f5;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px;margin:32px auto 0;max-width:880px;display:grid;grid-template-columns:80px 1fr;gap:18px;align-items:center}
+.author-bio img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--surface);box-shadow:var(--shadow)}
+.author-bio .author-name{font-weight:700;font-size:15px;color:var(--ink);margin:0 0 2px}
+.author-bio .author-role{font-size:13px;color:var(--accent-dark);margin:0 0 6px;font-weight:600}
+.author-bio .author-desc{font-size:13px;color:var(--ink-2);margin:0 0 6px;line-height:1.5}
+.author-bio .author-meta{font-size:12px;color:var(--ink-3)}
+.author-bio .author-meta a{color:var(--accent-dark);font-weight:600}
+@media(max-width:560px){.author-bio{grid-template-columns:1fr;text-align:center}.author-bio img{margin:0 auto}}
+.affiliate-banner{max-width:880px;margin:14px auto 0;font-size:13px;color:var(--ink-3);text-align:center;background:#fffbe6;border:1px solid #f5d76e;border-radius:var(--radius);padding:8px 14px}
+.affiliate-banner a{color:var(--accent-dark);font-weight:600}
+
+/* About redaction */
+.about-redaction{background:#fafafa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 20px}
+.about-redaction .wrap{max-width:880px}
+.about-redaction h2{font-size:24px;margin:0 0 16px;letter-spacing:-.01em}
+.about-redaction ul{margin:14px 0;padding-left:20px}
+.about-redaction li{margin-bottom:6px;color:var(--ink-2)}
+.about-redaction .contact{margin-top:14px;font-size:14px;color:var(--ink-3)}
+.about-redaction .contact a{color:var(--accent-dark);font-weight:600}
 </style>
 </head>
 <body>
@@ -216,8 +237,19 @@ h4{font-size:16px;margin:18px 0 6px}
       <div class="kpi"><div class="kpi-num">6 sem.</div><div class="kpi-label">de test 8h/jour</div></div>
       <div class="kpi"><div class="kpi-num">/20</div><div class="kpi-label">notation interne</div></div>
     </div>
-    <div class="update">Mise à jour avril 2026 — modèles disponibles sur Amazon.fr</div>
+    <div class="update">Publié le 15 mars 2026 · Dernière mise à jour : 1<sup>er</sup> mai 2026 — modèles disponibles sur Amazon.fr</div>
   </div>
+
+  <aside class="author-bio" aria-label="Auteur de l'article">
+    <img src="/images/author-marc.webp" alt="Marc Bélanger, rédacteur en chef" width="64" height="64" loading="lazy">
+    <div>
+      <p class="author-name">Marc Bélanger</p>
+      <p class="author-role">Rédacteur en chef — équipement bureau &amp; gaming</p>
+      <p class="author-desc">Marc teste depuis 8 ans le matériel de bureau et gaming pour plusieurs magazines spécialisés. Il a passé en revue plus de 200 chaises ergonomiques et 50 chaises gamer haut de gamme.</p>
+      <p class="author-meta">Publié le 15 mars 2026 · Dernière mise à jour : 1<sup>er</sup> mai 2026 · <a href="#methode">Méthodologie</a> · <a href="#about-redaction">À propos</a></p>
+    </div>
+  </aside>
+  <p class="affiliate-banner">Liens affiliés Amazon — détails dans le <a href="#about-redaction">disclaimer</a> en bas de page.</p>
 </section>
 
 <section id="methode">
@@ -883,6 +915,22 @@ h4{font-size:16px;margin:18px 0 6px}
   </div>
 </div>
 
+<section id="about-redaction" class="about-redaction">
+  <div class="wrap">
+    <h2>À propos de cette rédaction</h2>
+    <p>Nous sommes une rédaction indépendante spécialisée dans l'équipement bureau et gaming, basée à Lyon. Marc Bélanger, rédacteur en chef, est entouré de deux testeurs réguliers qui partagent les protocoles de mesure et la rotation des modèles entre bureaux.</p>
+    <p class="author-meta" style="margin-bottom:14px">Dernière mise à jour : 1<sup>er</sup> mai 2026.</p>
+    <ul>
+      <li><strong>3 testeurs réguliers</strong>, basés à Lyon, profils 1m72/68 kg, 1m87/94 kg et 1m65/58 kg.</li>
+      <li><strong>Tous les produits sont achetés</strong> sur Amazon.fr en condition réelle — aucun envoi gratuit constructeur, aucune unité de presse.</li>
+      <li><strong>Aucune marque ne paie</strong> pour figurer dans nos comparatifs. La sélection finale est décidée après les six semaines de test, pas avant.</li>
+      <li><strong>Liens affiliés Amazon</strong> — quand vous achetez via un de nos liens, Amazon nous reverse une commission. Cela ne change rien au prix payé. Disclaimer complet dans le footer ci-dessous.</li>
+      <li><strong>Méthodologie</strong> publique, pondérations affichées en haut de page, défauts produits cités explicitement dans chaque verdict.</li>
+    </ul>
+    <p class="contact">Contact rédaction : <a href="mailto:redaction@meilleure-chaise-gaming.fr">redaction@meilleure-chaise-gaming.fr</a></p>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer-wrap">
     <div class="footer-cols">
@@ -895,7 +943,8 @@ h4{font-size:16px;margin:18px 0 6px}
         <p><a href="#methode">Méthode</a><br>
         <a href="#verdicts">Verdicts</a><br>
         <a href="#comparatif">Comparatif</a><br>
-        <a href="#pour-qui">Pour qui</a></p>
+        <a href="#pour-qui">Pour qui</a><br>
+        <a href="#about-redaction">À propos rédaction</a></p>
       </div>
       <div>
         <h5>Guides</h5>
@@ -969,7 +1018,8 @@ window.addEventListener('scroll',function(){
     "image":"https://m.media-amazon.com/images/I/71800+e9OzL._AC_UL320_.jpg"
   },
   "reviewRating":{"@type":"Rating","ratingValue":"16.5","bestRating":"20"},
-  "author":{"@type":"Organization","name":"Notre rédaction Meilleure Chaise Gaming"},
+  "author":{"@id":"https://www.meilleure-chaise-gaming.fr/#marc-belanger"},
+  "publisher":{"@type":"Organization","name":"Meilleure Chaise Gaming","logo":{"@type":"ImageObject","url":"https://www.meilleure-chaise-gaming.fr/images/favicon.svg"}},
   "reviewBody":"À 189 €, le meilleur ratio durabilité/prix sous 200 €. Mousse 45 kg/m³, vérin classe 4, lombaire ajustable. Défauts : tissu retient les poils, accoudoirs 3D pas 4D."
 }
 </script>
@@ -984,7 +1034,8 @@ window.addEventListener('scroll',function(){
     "image":"https://m.media-amazon.com/images/I/51WXS25p5IL._AC_UL320_.jpg"
   },
   "reviewRating":{"@type":"Rating","ratingValue":"17.5","bestRating":"20"},
-  "author":{"@type":"Organization","name":"Notre rédaction Meilleure Chaise Gaming"},
+  "author":{"@id":"https://www.meilleure-chaise-gaming.fr/#marc-belanger"},
+  "publisher":{"@type":"Organization","name":"Meilleure Chaise Gaming","logo":{"@type":"ImageObject","url":"https://www.meilleure-chaise-gaming.fr/images/favicon.svg"}},
   "reviewBody":"Sweet spot 200-250 €. Mécanisme synchron 1:2, accoudoirs 4D, mousse 48 kg/m³. Pas de repose-pieds intégré, assemblage 50 min."
 }
 </script>
@@ -999,7 +1050,8 @@ window.addEventListener('scroll',function(){
     "image":"https://m.media-amazon.com/images/I/81IiOaet+7L._AC_UL320_.jpg"
   },
   "reviewRating":{"@type":"Rating","ratingValue":"18","bestRating":"20"},
-  "author":{"@type":"Organization","name":"Notre rédaction Meilleure Chaise Gaming"},
+  "author":{"@id":"https://www.meilleure-chaise-gaming.fr/#marc-belanger"},
+  "publisher":{"@type":"Organization","name":"Meilleure Chaise Gaming","logo":{"@type":"ImageObject","url":"https://www.meilleure-chaise-gaming.fr/images/favicon.svg"}},
   "reviewBody":"Le seul 400 €+ qui justifie son prix. Mousse moulée à froid 50 kg/m³, châssis acier, garantie 5 ans vérifiée. Look conservateur, roulettes nylon à changer sur parquet."
 }
 </script>
@@ -1011,6 +1063,51 @@ window.addEventListener('scroll',function(){
   "url":"https://www.meilleure-chaise-gaming.fr/",
   "name":"Meilleure Chaise Gaming",
   "description":"Comparatif indépendant chaise gaming 2026"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "@id":"https://www.meilleure-chaise-gaming.fr/#marc-belanger",
+  "name":"Marc Bélanger",
+  "jobTitle":"Rédacteur en chef équipement bureau & gaming",
+  "description":"Marc teste depuis 8 ans le matériel de bureau et gaming pour plusieurs magazines spécialisés. Il a passé en revue plus de 200 chaises ergonomiques et 50 chaises gamer haut de gamme.",
+  "image":"https://www.meilleure-chaise-gaming.fr/images/author-marc.webp",
+  "url":"https://www.meilleure-chaise-gaming.fr/#about-redaction",
+  "knowsAbout":["Ergonomie","Gaming","Bureau","Chaise gaming","Fauteuil ergonomique"],
+  "worksFor":{
+    "@type":"Organization",
+    "name":"Meilleure Chaise Gaming",
+    "url":"https://www.meilleure-chaise-gaming.fr/"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Meilleure chaise gaming en 2026 : comparatif indépendant — 22 testées, 6 retenues",
+  "image":["https://m.media-amazon.com/images/I/71800+e9OzL._AC_UL320_.jpg","https://m.media-amazon.com/images/I/51WXS25p5IL._AC_UL320_.jpg","https://m.media-amazon.com/images/I/81IiOaet+7L._AC_UL320_.jpg"],
+  "datePublished":"2026-03-15",
+  "dateModified":"2026-05-01",
+  "author":{
+    "@type":"Person",
+    "@id":"https://www.meilleure-chaise-gaming.fr/#marc-belanger",
+    "name":"Marc Bélanger",
+    "jobTitle":"Rédacteur en chef équipement bureau & gaming",
+    "description":"Marc teste depuis 8 ans le matériel de bureau et gaming pour plusieurs magazines spécialisés. Il a passé en revue plus de 200 chaises ergonomiques et 50 chaises gamer haut de gamme.",
+    "image":"https://www.meilleure-chaise-gaming.fr/images/author-marc.webp"
+  },
+  "publisher":{
+    "@type":"Organization",
+    "name":"Meilleure Chaise Gaming",
+    "logo":{"@type":"ImageObject","url":"https://www.meilleure-chaise-gaming.fr/images/favicon.svg"}
+  },
+  "mainEntityOfPage":{"@type":"WebPage","@id":"https://www.meilleure-chaise-gaming.fr/"},
+  "description":"Comparatif chaise gaming 2026 indépendant. 22 modèles testés 6 semaines en bureau 8h/jour, 6 retenus. Verdicts tranchés, données techniques (densité mousse, vérin classe, accoudoirs 4D)."
 }
 </script>
 
