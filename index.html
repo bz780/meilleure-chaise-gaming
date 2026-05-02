@@ -97,6 +97,37 @@ h4{font-size:16px;margin:18px 0 6px}
 /* Compare table */
 .compare-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius-lg);box-shadow:var(--shadow);background:var(--surface)}
 .compare-table{width:100%;border-collapse:collapse;font-size:13px;min-width:1080px}
+
+/* Filtres tableau comparatif */
+.cmp-filters{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:18px;box-shadow:var(--shadow)}
+.cmp-filters-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.cmp-filters-title{font-size:15px;font-weight:700;color:var(--ink);margin:0}
+.cmp-count{font-size:13px;color:var(--ink-3);font-weight:500}
+.cmp-count strong{color:var(--accent);font-weight:700}
+.cmp-filters-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+@media(max-width:1000px){.cmp-filters-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.cmp-filters-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.cmp-filters-grid{grid-template-columns:1fr}}
+.cmp-filter label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.03em}
+.cmp-filter select{width:100%;padding:8px 10px;border:1px solid var(--line-2);border-radius:6px;background:#fff;font-size:13px;color:var(--ink);font-family:inherit;cursor:pointer;transition:border-color .15s}
+.cmp-filter select:hover{border-color:var(--accent)}
+.cmp-filter select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.cmp-filter option:disabled{color:#bbb}
+.cmp-reset{display:none;background:transparent;border:1px solid var(--line-2);color:var(--ink-2);padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.cmp-reset:hover{background:var(--accent-soft);color:var(--accent-dark);border-color:var(--accent)}
+.cmp-reset.is-visible{display:inline-block}
+.cmp-empty{display:none;padding:30px 20px;text-align:center;color:var(--ink-3);font-size:14px;font-style:italic;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);margin-top:14px}
+.cmp-empty.is-visible{display:block}
+.cmp-mobile-toggle{display:none}
+@media(max-width:640px){
+  .cmp-mobile-toggle{display:block;margin-bottom:0}
+  .cmp-mobile-toggle summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--ink);padding:10px 14px;background:#f5f5f5;border-radius:6px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  .cmp-mobile-toggle summary::-webkit-details-marker{display:none}
+  .cmp-mobile-toggle summary::after{content:"▼";font-size:11px;color:var(--accent);transition:transform .2s}
+  .cmp-mobile-toggle[open] summary::after{transform:rotate(180deg)}
+  .cmp-filters-grid{display:none;margin-top:14px}
+  .cmp-mobile-toggle[open] ~ .cmp-filters-grid{display:grid}
+}
 .compare-table th,.compare-table td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
 .compare-table th{background:#f5f5f5;font-weight:600;color:var(--ink);font-size:12px;text-transform:uppercase;letter-spacing:.03em}
 .compare-table tr:last-child td{border-bottom:none}
@@ -415,8 +446,70 @@ h4{font-size:16px;margin:18px 0 6px}
     <h2 class="section-title">Tableau comparatif des 10 meilleures chaises gaming</h2>
     <p class="section-sub">Données vérifiées : densité de mousse mesurée à la cale, inclinaison contrôlée au rapporteur, garantie constructeur lue sur la fiche produit officielle. Les prix sont des fourchettes observées sur 6 semaines, pas des prix flash. Note sur 20.</p>
 
+    <div class="cmp-filters" id="cmpFilters">
+      <div class="cmp-filters-head">
+        <h3 class="cmp-filters-title">Filtrer le tableau</h3>
+        <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <span class="cmp-count" aria-live="polite" id="cmpCount"><strong>10</strong> / 10 modèles affichés</span>
+          <button type="button" class="cmp-reset" id="cmpReset">Réinitialiser les filtres</button>
+        </div>
+      </div>
+      <details class="cmp-mobile-toggle">
+        <summary>Filtres</summary>
+      </details>
+      <div class="cmp-filters-grid" id="cmpFiltersGrid">
+        <div class="cmp-filter">
+          <label for="f-prix">Prix</label>
+          <select id="f-prix" data-filter="prix">
+            <option value="">Tous les prix</option>
+            <option value="lt150">Moins de 150 €</option>
+            <option value="150-200">150 à 200 €</option>
+            <option value="200-300">200 à 300 €</option>
+            <option value="gt300">Plus de 300 €</option>
+          </select>
+        </div>
+        <div class="cmp-filter">
+          <label for="f-charge">Charge supportée</label>
+          <select id="f-charge" data-filter="charge">
+            <option value="">Toutes les charges</option>
+            <option value="lt130">Jusqu'à 130 kg</option>
+            <option value="150">150 kg</option>
+            <option value="gt150">180 kg et plus</option>
+          </select>
+        </div>
+        <div class="cmp-filter">
+          <label for="f-accoudoirs">Accoudoirs</label>
+          <select id="f-accoudoirs" data-filter="accoudoirs">
+            <option value="">Tous les accoudoirs</option>
+            <option value="2d-fixes">2D fixes</option>
+            <option value="2d">2D</option>
+            <option value="3d">3D</option>
+            <option value="4d">4D</option>
+          </select>
+        </div>
+        <div class="cmp-filter">
+          <label for="f-inclinaison">Inclinaison</label>
+          <select id="f-inclinaison" data-filter="inclinaison">
+            <option value="">Toutes les inclinaisons</option>
+            <option value="lt140">Jusqu'à 140°</option>
+            <option value="140-155">141° à 155°</option>
+            <option value="gt155">Plus de 155°</option>
+          </select>
+        </div>
+        <div class="cmp-filter">
+          <label for="f-garantie">Garantie</label>
+          <select id="f-garantie" data-filter="garantie">
+            <option value="">Toutes les garanties</option>
+            <option value="1">1 an</option>
+            <option value="2">2 ans</option>
+            <option value="5">5 ans</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <div class="compare-wrap">
-      <table class="compare-table">
+      <table class="compare-table" id="cmpTable">
         <thead>
           <tr>
             <th>#</th>
@@ -434,7 +527,7 @@ h4{font-size:16px;margin:18px 0 6px}
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr data-prix="159" data-charge="150" data-accoudoirs="3d" data-inclinaison="152" data-garantie="2">
             <td class="rank">1</td>
             <td><img src="https://m.media-amazon.com/images/I/71800+e9OzL._AC_UL320_.jpg" alt="Symino Ergonomique chaise gaming" loading="lazy" width="48" height="48"></td>
             <td class="model-name">Symino Ergonomique</td>
@@ -448,7 +541,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Le meilleur sous 200 €</td>
             <td><a href="https://www.amazon.fr/Symino-Ergonomique-Fauteuil-Repose-Pieds-Telescopique/dp/B0GDXT2YZB?linkCode=ll1&tag=zafili-21&linkId=b0gdxt2yzbref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="209" data-charge="150" data-accoudoirs="4d" data-inclinaison="158" data-garantie="2">
             <td class="rank">2</td>
             <td><img src="https://m.media-amazon.com/images/I/51WXS25p5IL._AC_UL320_.jpg" alt="EaseZen chaise gaming" loading="lazy" width="48" height="48"></td>
             <td class="model-name">EaseZen Fauteuil</td>
@@ -462,7 +555,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Sweet spot ergonomie</td>
             <td><a href="https://www.amazon.fr/EaseZen-Fauteuil-Gaming-Ergonomique-Appui-tete/dp/B0GL25G886?linkCode=ll1&tag=zafili-21&linkId=b0gl25g886ref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="389" data-charge="200" data-accoudoirs="3d" data-inclinaison="155" data-garantie="5">
             <td class="rank">3</td>
             <td><img src="https://m.media-amazon.com/images/I/81IiOaet+7L._AC_UL320_.jpg" alt="SONGMICS HOME OBG072 chaise gaming" loading="lazy" width="48" height="48"></td>
             <td class="model-name">SONGMICS HOME OBG072</td>
@@ -476,7 +569,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Durabilité 5+ ans</td>
             <td><a href="https://www.amazon.fr/SONGMICS-HOME-Ergonomique-Repose-Pieds-OBG072G01/dp/B0D3HKWFB4?linkCode=ll1&tag=zafili-21&linkId=b0d3hkwfb4ref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="229" data-charge="150" data-accoudoirs="2d" data-inclinaison="150" data-garantie="2">
             <td class="rank">4</td>
             <td><img src="https://m.media-amazon.com/images/I/711vkcZQtxL._AC_UL320_.jpg" alt="SONGMICS chaise gaming télescopique" loading="lazy" width="48" height="48"></td>
             <td class="model-name">SONGMICS Pro télescopique</td>
@@ -490,7 +583,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Marque connue, ergo moyenne</td>
             <td><a href="https://www.amazon.fr/SONGMICS-repose-pieds-telescopique-ergonomique-appui-tete/dp/B086MC977H?linkCode=ll1&tag=zafili-21&linkId=b086mc977href&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="199" data-charge="180" data-accoudoirs="3d" data-inclinaison="155" data-garantie="1">
             <td class="rank">5</td>
             <td><img src="https://m.media-amazon.com/images/I/615COGaeCDL._AC_UL320_.jpg" alt="WOTSTA Massage chaise gaming" loading="lazy" width="48" height="48"></td>
             <td class="model-name">WOTSTA Massage</td>
@@ -504,7 +597,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Massage gadget mais agréable</td>
             <td><a href="https://www.amazon.fr/WOTSTA-Massage-Repose-Pieds-Fauteuil-Capacite/dp/B0DZ6CRKYH?linkCode=ll1&tag=zafili-21&linkId=b0dz6crkyhref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="179" data-charge="150" data-accoudoirs="2d" data-inclinaison="160" data-garantie="1">
             <td class="rank">6</td>
             <td><img src="https://m.media-amazon.com/images/I/71jvHAjRQSL._AC_UL320_.jpg" alt="Devoko chaise gaming LED" loading="lazy" width="48" height="48"></td>
             <td class="model-name">Devoko LED Gaming</td>
@@ -518,7 +611,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Setup RGB, ergo basique</td>
             <td><a href="https://www.amazon.fr/Devoko-Chaise-Gaming-LED-Repose-Pieds/dp/B0DZ6JLL2M?linkCode=ll1&tag=zafili-21&linkId=b0dz6jll2mref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="189" data-charge="150" data-accoudoirs="3d" data-inclinaison="150" data-garantie="2">
             <td class="rank">7</td>
             <td><img src="https://m.media-amazon.com/images/I/61tjHZyXJJL._AC_UL320_.jpg" alt="JUMMICO chaise gaming ergonomique" loading="lazy" width="48" height="48"></td>
             <td class="model-name">JUMMICO Ergonomique</td>
@@ -532,7 +625,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Solide alternative au Symino</td>
             <td><a href="https://www.amazon.fr/JUMMICO-Chaise-Gaming-Ergonomique-Repose-Pieds/dp/B0F6MY24M6?linkCode=ll1&tag=zafili-21&linkId=b0f6my24m6ref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="199" data-charge="150" data-accoudoirs="3d" data-inclinaison="155" data-garantie="2">
             <td class="rank">8</td>
             <td><img src="https://m.media-amazon.com/images/I/61+fHkEeA5L._AC_UL320_.jpg" alt="WoRaum chaise gaming lombaire" loading="lazy" width="48" height="48"></td>
             <td class="model-name">WoRaum Lombaire</td>
@@ -546,7 +639,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Lombaire ajustable très efficace</td>
             <td><a href="https://www.amazon.fr/WoRaum-Ergonomique-Lombaire-Repose-Pieds-Retractable/dp/B0FNWZCMRP?linkCode=ll1&tag=zafili-21&linkId=b0fnwzcmrpref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="119" data-charge="150" data-accoudoirs="2d-fixes" data-inclinaison="135" data-garantie="2">
             <td class="rank">9</td>
             <td><img src="https://m.media-amazon.com/images/I/71Qcb3pfVEL._AC_UL320_.jpg" alt="SONGMICS OBG077 chaise gaming budget" loading="lazy" width="48" height="48"></td>
             <td class="model-name">SONGMICS OBG077</td>
@@ -560,7 +653,7 @@ h4{font-size:16px;margin:18px 0 6px}
             <td class="verdict-cell">Casual budget, dépannage 2 ans</td>
             <td><a href="https://www.amazon.fr/SONGMICS-dOrdinateur-Ergonomique-Repose-Pieds-OBG077B01/dp/B08NT6X31J?linkCode=ll1&tag=zafili-21&linkId=b08nt6x31jref&ref_=as_li_ss_tl" class="btn-amazon" target="_blank" rel="nofollow noopener sponsored">Amazon</a></td>
           </tr>
-          <tr>
+          <tr data-prix="89" data-charge="120" data-accoudoirs="2d-fixes" data-inclinaison="130" data-garantie="1">
             <td class="rank">10</td>
             <td><img src="https://m.media-amazon.com/images/I/61AQqQCdInL._AC_UL320_.jpg" alt="IntimaTe WM-Heart chaise gaming entrée gamme" loading="lazy" width="48" height="48"></td>
             <td class="model-name">IntimaTe WM-Heart</td>
@@ -577,6 +670,7 @@ h4{font-size:16px;margin:18px 0 6px}
         </tbody>
       </table>
     </div>
+    <div class="cmp-empty" id="cmpEmpty">Aucun modèle ne correspond à cette combinaison de filtres. Essayez d'élargir vos critères ou réinitialisez les filtres.</div>
   </div>
 </section>
 
@@ -1130,6 +1224,122 @@ window.addEventListener('scroll',function(){
     {"@type":"Product","name":"IntimaTe WM-Heart chaise rembourrée","image":"https://m.media-amazon.com/images/I/61AQqQCdInL._AC_UL320_.jpg","brand":{"@type":"Brand","name":"IntimaTe"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"129","availability":"https://schema.org/InStock","url":"https://www.amazon.fr/IntimaTe-WM-Heart-Ergonomique-Rembourree/dp/B084JHNF3B"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.2","reviewCount":"2316","bestRating":"5"}}
   ]
 }
+</script>
+
+<script>
+(function(){
+  var tableEl = document.getElementById('cmpTable');
+  if (!tableEl) return;
+  var rows = Array.prototype.slice.call(tableEl.querySelectorAll('tbody tr'));
+  var totalRows = rows.length;
+  var filtersWrap = document.getElementById('cmpFilters');
+  var selects = Array.prototype.slice.call(filtersWrap.querySelectorAll('select[data-filter]'));
+  var resetBtn = document.getElementById('cmpReset');
+  var countEl = document.getElementById('cmpCount');
+  var emptyEl = document.getElementById('cmpEmpty');
+
+  function priceMatch(v, p){
+    if (!v) return true;
+    if (v === 'lt150') return p < 150;
+    if (v === '150-200') return p >= 150 && p < 200;
+    if (v === '200-300') return p >= 200 && p < 300;
+    if (v === 'gt300') return p >= 300;
+    return true;
+  }
+  function chargeMatch(v, c){
+    if (!v) return true;
+    if (v === 'lt130') return c <= 130;
+    if (v === '150') return c >= 140 && c <= 160;
+    if (v === 'gt150') return c >= 170;
+    return true;
+  }
+  function inclMatch(v, i){
+    if (!v) return true;
+    if (v === 'lt140') return i <= 140;
+    if (v === '140-155') return i > 140 && i <= 155;
+    if (v === 'gt155') return i > 155;
+    return true;
+  }
+  function exactMatch(v, x){
+    if (!v) return true;
+    return String(v) === String(x);
+  }
+
+  function rowMatchesExcept(row, filters, skipKey){
+    var p = parseFloat(row.getAttribute('data-prix'));
+    var c = parseFloat(row.getAttribute('data-charge'));
+    var i = parseFloat(row.getAttribute('data-inclinaison'));
+    var a = row.getAttribute('data-accoudoirs');
+    var g = row.getAttribute('data-garantie');
+    if (skipKey !== 'prix' && !priceMatch(filters.prix, p)) return false;
+    if (skipKey !== 'charge' && !chargeMatch(filters.charge, c)) return false;
+    if (skipKey !== 'inclinaison' && !inclMatch(filters.inclinaison, i)) return false;
+    if (skipKey !== 'accoudoirs' && !exactMatch(filters.accoudoirs, a)) return false;
+    if (skipKey !== 'garantie' && !exactMatch(filters.garantie, g)) return false;
+    return true;
+  }
+
+  function getFilters(){
+    var f = {};
+    selects.forEach(function(sel){
+      f[sel.getAttribute('data-filter')] = sel.value;
+    });
+    return f;
+  }
+
+  function countOption(key, val, filters){
+    var fakeFilters = Object.assign({}, filters);
+    fakeFilters[key] = val;
+    return rows.filter(function(r){
+      // matches all *other* filters AND the candidate value of this filter
+      return rowMatchesExcept(r, fakeFilters, null);
+    }).length;
+  }
+
+  function update(){
+    var filters = getFilters();
+    var visibleCount = 0;
+    rows.forEach(function(r){
+      var ok = rowMatchesExcept(r, filters, null);
+      r.style.display = ok ? '' : 'none';
+      if (ok) visibleCount++;
+    });
+    countEl.innerHTML = '<strong>' + visibleCount + '</strong> / ' + totalRows + ' modèle' + (totalRows > 1 ? 's' : '') + ' affiché' + (visibleCount > 1 ? 's' : '');
+    emptyEl.classList.toggle('is-visible', visibleCount === 0);
+
+    // Reset button visibility
+    var anyActive = selects.some(function(s){ return s.value !== ''; });
+    resetBtn.classList.toggle('is-visible', anyActive);
+
+    // Recalc each option count and disable the impossible ones
+    selects.forEach(function(sel){
+      var key = sel.getAttribute('data-filter');
+      var current = sel.value;
+      // recompute filters as if this filter were unset (so the user can still change it freely)
+      var otherFilters = Object.assign({}, filters);
+      otherFilters[key] = '';
+      Array.prototype.forEach.call(sel.options, function(opt){
+        if (opt.value === '') { opt.disabled = false; opt.textContent = opt.textContent.replace(/\s*\(\d+\)$/, ''); return; }
+        var n = countOption(key, opt.value, otherFilters);
+        // strip previous count
+        var base = opt.textContent.replace(/\s*\(\d+\)$/, '');
+        opt.textContent = base + ' (' + n + ')';
+        // disable if 0 unless this is the currently selected value
+        opt.disabled = (n === 0 && opt.value !== current);
+      });
+    });
+  }
+
+  filtersWrap.addEventListener('change', function(e){
+    if (e.target && e.target.tagName === 'SELECT') update();
+  });
+  resetBtn.addEventListener('click', function(){
+    selects.forEach(function(s){ s.value = ''; });
+    update();
+  });
+
+  update();
+})();
 </script>
 
 </body>
